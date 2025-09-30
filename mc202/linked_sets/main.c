@@ -14,12 +14,21 @@ int main(){
 
     while(1){
         // ignora espacos/newlines e le o comando e o nome.
-        if (scanf(" %c %d", &cmd, &set_name) != 2) { 
-            break; 
+        if (scanf(" %c", &cmd) != 1){
+            break;
         }
+
+        if (cmd == 't'){
+            break;
+        }
+
+        if (scanf("%d", &set_name) != 1){
+            break;
+        }
+
         
         if (cmd == 'c'){
-            // Se ja existir, liberamos o antigo (assumindo que ls_create faz o malloc).
+            // se ja existir, liberamos o antigo.
             if (sets[set_name] != NULL) {
                 ls_free(sets[set_name]); 
             }
@@ -59,33 +68,47 @@ int main(){
         }
         
         else if (cmd == 'u'){
-            // COMANDO UNIÃO: Cria um novo set (sets[set_name]) a partir de name_b e name_c
             if (scanf("%d %d", &name_b, &name_c) != 2) break;
             
-            // Verifica se os sets de origem existem antes de passar
-            if (sets[name_b] == NULL || sets[name_c] == NULL) {
-                continue;
-            }
-            
-            // Libera o set 'nameA' se ja existir antes de criar a uniao
+            // libera o lugar do set A
             if (sets[set_name] != NULL) {
                 ls_free(sets[set_name]);
             }
             
             sets[set_name] = ls_union(sets[name_b], sets[name_c]); 
         }
+
+        else if (cmd == 'n'){
+            if (scanf("%d %d", &name_b, &name_c) != 2) break;
+            if (sets[set_name] != NULL) {
+                ls_free(sets[set_name]);
+            }
+            sets[set_name] = ls_intersect(sets[name_b], sets[name_c]); 
+
+        }
+
+        else if (cmd == 'm'){
+            if (scanf("%d %d", &name_b, &name_c) != 2) break;
+            if (sets[set_name] != NULL) {
+                ls_free(sets[set_name]);
+            }
+            sets[set_name] = ls_diff(sets[name_b], sets[name_c]); 
+
+        }
+
+        else if (cmd == 'e'){
+            scanf("%d", &element);
+            print_element(sets[set_name], element, set_name);
+        }
         
         else if (cmd == 'p'){
-            // COMANDO PRINT: O set[set_name] TEM A GARANTIA DE EXISTIR.
-            printf("ENTROU AQUI\n");
             print_list(sets[set_name], set_name);
         }
     }
     
-    // --- MEMORY CLEANUP ---
+    // limpeza de memória
     for (int i = 0; i < 127; i++) {
         if (sets[i] != NULL) {
-            // Libera a memória de cada set.
             ls_free(sets[i]); 
         }
     }
