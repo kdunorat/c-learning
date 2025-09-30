@@ -1,0 +1,95 @@
+Aqui estão vários casos de teste de borda para o problema do "Grau de Independência", focando em desafios lógicos em vez de desempenho.
+
+Caso 1: String Vazia
+Testa como o código lida com a ausência de caracteres.
+Entrada:
+5 0
+abcde
+
+Saída Esperada:
+1
+Justificativa: Nenhuma subsequência de tamanho 1 (como 'a') pode ser formada a partir de uma string S2 vazia.
+
+Caso 2: Strings Idênticas
+Testa se o código corretamente identifica que todas as subsequências possíveis existem.
+Entrada:
+7 7
+abacaba
+abacaba
+Saída Esperada:
+8
+Justificativa: Como S1 e S2 são idênticas, toda subsequência de S1, incluindo a própria S1 (tamanho 7), é também uma subsequência de S2. O primeiro tamanho que falha é 8.
+
+Caso 3: Sem Caracteres em Comum
+O caso mais simples de falha. A resposta deve ser imediata.
+Entrada:
+5 5
+aaaaa
+bbbbb
+Saída Esperada:
+1
+Justificativa: A primeira subsequência de tamanho 1 ('a') de S1 já não existe em S2.
+
+Caso 4: Padrões Repetitivos
+Testa a habilidade do algoritmo de lidar com caracteres repetidos e a ordem correta.
+Entrada:
+6 6
+aaaaaa
+aaaaa
+Saída Esperada:
+6
+Justificativa: S1 tem seis 'a's. S2 só tem cinco. A subsequência "aaaaaa" (tamanho 6) de S1 não pode ser formada em S2.
+
+Caso 5: Permutação
+As strings têm os mesmos caracteres, mas em ordens diferentes.
+Entrada:
+4 4
+abcd
+dcba
+Saída Esperada:
+2
+Justificativa: Todas as letras de S1 existem em S2 (grau > 1). No entanto, a subsequência "ab" (tamanho 2) de S1 não pode ser formada em S2, pois 'b' aparece antes de 'a'.
+
+Caso 6: A Falha Sutil
+Um caso onde a maioria das subsequências existe, testando se a busca é realmente exaustiva.
+Entrada:
+4 4
+abca
+abcb
+Saída Esperada:
+3
+Justificativa:
+
+k=1: 'a', 'b', 'c' existem em S2.
+
+k=2: 'ab', 'ac', 'aa', 'bc', 'ba', 'ca' de S1 existem em S2? Sim. Por exemplo, bca de S1 não é uma subsequência, pois a ordem está errada. As subsequências de S1 de tamanho 2 são: ab, ac, aa, bc, ba, ca. Espera, vamos corrigir. As subsequências de abca são: ab, ac, aa, bc, ba, ca.
+
+Subsequências de S1 de tamanho 2: ab, ac, aa (usando os dois 'a's), bc, ba.
+
+ab está em abcb.
+
+ac está em abcb.
+
+aa não está em abcb. Ah, então a resposta é 2.
+
+Vamos tentar um exemplo melhor para uma falha sutil no tamanho 3.
+Entrada (Corrigida):
+5 5
+abaca
+abacb
+Saída Esperada (Corrigida):
+3
+Justificativa:
+
+k=1 e k=2: Todas as subsequências de S1 existem em S2.
+
+k=3: A subsequência aca de S1 (a no índice 2, c no 3, a no 4) não existe em S2, pois não há um segundo 'a' depois do 'c'.
+
+Caso 7: S1 é uma Subsequência Completa de S2
+Similar ao caso das strings idênticas, mas S2 tem caracteres extras.
+Entrada:
+3 10
+ace
+axbycxxdef
+Saída Esperada:
+4
