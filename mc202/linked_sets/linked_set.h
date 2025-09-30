@@ -24,15 +24,20 @@ node* create_node(int x);
 int check_element(node* current, int x);
 void insert_head(list* A, int x);
 void remove_head(list* A);
-void remove_tail(list* A);
+node* find_node(list* A, int x);
+void remove_node(list* A, int x);
 void insert_tail(list* A, int x);
-void ls_insert(list* A, int* elements, int t);
+list* ls_insert(list* A, int* elements, int t);
 void ls_remove(list* A, int* elements, int t);
-void ls_union(int name, list* B, list* C);
-void ls_intersect(list*A, list* B, list* C);
-void ls_diff(list*A, list* B, list* C);
-void print_element(list* A, int x);
-void print_list(list* A);
+list* ls_union(list* B, list* C);
+list* ls_intersect(list* B, list* C);
+list* ls_diff(list* B, list* C);
+void print_element(list* A, int x, int name);
+node* node_sorted_merge(node* a, node* b);
+void node_split_halves(node* source, node** front_ref, node** back_ref);
+void node_merge_sort(node** head_ref);
+void print_list(list* A, int name);
+void ls_free(list* A);
 void end(list* A);
 
 

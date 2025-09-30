@@ -6,7 +6,7 @@
 #include "dequef.h"
 
 
-int main(void) {
+int main() {
 
   char cmd[13];
   float f;
