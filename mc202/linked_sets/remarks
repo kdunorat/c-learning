@@ -1,9 +1,0 @@
-Por Que a Técnica do Ponteiro Rápido/Lento Funciona
-A lógica é baseada na velocidade relativa dos ponteiros:
-
-Ponteiro Lento (slow): Começa no início e avança um nó por vez.
-
-Ponteiro Rápido (fast): Começa no início (ou no segundo nó, dependendo da convenção) e avança dois nós por vez.
-
-Quando o ponteiro rápido (fast) atinge o final da lista (ou NULL), o ponteiro lento (slow), que está na metade da velocidade, deve estar, obrigatoriamente, apontando para o nó que marca o meio da lista.
-

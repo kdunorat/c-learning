@@ -1,0 +1,3 @@
+Violação de memória acontece provavelmente pq um ponteiro ta apontando pra uma coisa que foi destruída com free. Estava acontecendo comigo nos casos por exemplo:
+ u A A B onde o conjunto de destino também é o conjunto de origem. Como eu tava apagando o ponteiro que levava até a casa do conjunto destino, pra liberar espaço,
+ na hora de usar ele como conjunto de origem dentro da união deu ruim, pois o ponteiro apontou pra um lugar destruído.

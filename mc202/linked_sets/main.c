@@ -8,27 +8,16 @@ int main(){
     char cmd;
     int element, t; 
     
-    // aloca o array de ponteiros e zera todos os 127 ponteiros (NULL).
-    list** sets = calloc(127, sizeof(list*)); 
+    list** sets = calloc(128, sizeof(list*)); 
     if (sets == NULL) return 1; 
 
     while(1){
-        // ignora espacos/newlines e le o comando e o nome.
-        if (scanf(" %c", &cmd) != 1){
-            break;
-        }
+        if (scanf(" %c", &cmd) != 1) break;
+        if (cmd == 't') break;
 
-        if (cmd == 't'){
-            break;
-        }
+        if (scanf("%d", &set_name) != 1) break;
 
-        if (scanf("%d", &set_name) != 1){
-            break;
-        }
-
-        
         if (cmd == 'c'){
-            // se ja existir, liberamos o antigo.
             if (sets[set_name] != NULL) {
                 ls_free(sets[set_name]); 
             }
@@ -36,64 +25,46 @@ int main(){
         }
         
         else if (cmd == 'i'){
-            
             if (scanf("%d", &t) != 1) break; 
-            
             int* elements = malloc(sizeof(int) * t);
             if (elements == NULL) break;
+            for (int i=0; i<t; i++) scanf("%d", &elements[i]);
             
-            for (int i=0; i<t; i++){
-                scanf("%d", &element);
-                elements[i] = element;
-            }
-            
-            // passa o set que existe (dentro de sets)
-            sets[set_name] = ls_insert(sets[set_name], elements, t); 
+            ls_insert(sets[set_name], elements, t); 
             free(elements); 
         }
         
         else if (cmd == 'r'){            
             if (scanf("%d", &t) != 1) break; 
-            
             int* elements = malloc(sizeof(int) * t);
             if (elements == NULL) break;
-
-            for (int i=0; i<t; i++){
-                scanf("%d", &element);
-                elements[i] = element;
-            }
+            for (int i=0; i<t; i++) scanf("%d", &elements[i]);
             
             ls_remove(sets[set_name], elements, t);
             free(elements);
         }
         
-        else if (cmd == 'u'){
+        else if (cmd == 'u' || cmd == 'n' || cmd == 'm'){
             if (scanf("%d %d", &name_b, &name_c) != 2) break;
             
-            // libera o lugar do set A
+            list* temp_result = NULL;
+
+            // calcula o resultado primeiro, usando os conjuntos originais
+            if (cmd == 'u') {
+                temp_result = ls_union(sets[name_b], sets[name_c]);
+            } else if (cmd == 'n') {
+                temp_result = ls_intersect(sets[name_b], sets[name_c]);
+            } else { // cmd == 'm'
+                temp_result = ls_diff(sets[name_b], sets[name_c]);
+            }
+
+            // agora, liberta o conjunto de destino antigo, se ele existir
             if (sets[set_name] != NULL) {
                 ls_free(sets[set_name]);
             }
             
-            sets[set_name] = ls_union(sets[name_b], sets[name_c]); 
-        }
-
-        else if (cmd == 'n'){
-            if (scanf("%d %d", &name_b, &name_c) != 2) break;
-            if (sets[set_name] != NULL) {
-                ls_free(sets[set_name]);
-            }
-            sets[set_name] = ls_intersect(sets[name_b], sets[name_c]); 
-
-        }
-
-        else if (cmd == 'm'){
-            if (scanf("%d %d", &name_b, &name_c) != 2) break;
-            if (sets[set_name] != NULL) {
-                ls_free(sets[set_name]);
-            }
-            sets[set_name] = ls_diff(sets[name_b], sets[name_c]); 
-
+            // atribui o novo resultado ao conjunto de destino
+            sets[set_name] = temp_result;
         }
 
         else if (cmd == 'e'){
@@ -107,7 +78,7 @@ int main(){
     }
     
     // limpeza de memória
-    for (int i = 0; i < 127; i++) {
+    for (int i = 0; i < 128; i++) {
         if (sets[i] != NULL) {
             ls_free(sets[i]); 
         }
