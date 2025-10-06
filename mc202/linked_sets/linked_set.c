@@ -115,7 +115,7 @@ void remove_node(list* A, int x) {
     if (prev_node != NULL) {
         prev_node->next = next_node;
     } else {
-        A->head = next_node;
+        A->head = next_node; // nova cabeça
     }
 
     if (next_node != NULL) {
