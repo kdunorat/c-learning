@@ -160,18 +160,30 @@ void free_cart_tree(CartesianTree* tree) {
 int main() {
     int t;
     while (scanf("%d", &t) == 1 && t != 0) {
+        printf("DEBUG: Lido t = %d\n", t);
         int *A = malloc(sizeof(int) * t);
 
         for (int i = 0; i < t; i++) {
             scanf(" %d", &A[i]);
         }
+        printf("DEBUG: Vetor lido com sucesso\n");
 
+        printf("DEBUG: Construindo árvore\n");
         CartesianTree *final_tree = create_cc_tree(A, t);
+        printf("DEBUG: Árvore criada\n");
+
+        printf("DEBUG: Iniciando print_levels\n");
         print_levels(final_tree->root);
+        printf("DEBUG: Print_levels terminou\n");
         printf("\n");
 
+        printf("DEBUG: Liberando árvore\n");
         free_cart_tree(final_tree);
+        printf("DEBUG: Árvore liberada\n");
+
+        printf("DEBUG: Liberando vetor\n");
         free(A);
+        printf("DEBUG: Vetor liberado\n");
     }
     return 0;
 }
